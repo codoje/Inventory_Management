@@ -54,23 +54,28 @@ document.addEventListener('DOMContentLoaded', () => {
             const container = document.querySelector('.subjects');
             container.innerHTML = ''; // Clear old content
 
-            values.forEach(row => {
-                const [itemName, quantity, expiration, status, lastChecked] = row;
+           values.forEach((row, index) => {
+  const [itemName, quantity, expiration, status, lastChecked] = row;
+  
+  // Pick a class dynamically (rotating through some of your existing card styles)
+  const cardClasses = ['eg', 'mth', 'cs', 'cg', 'net'];
+  const cardClass = cardClasses[index % cardClasses.length];
 
-                const div = document.createElement('div');
-                div.classList.add('eg'); // Change class as needed
-                div.innerHTML = `
-                    <span class="material-icons-sharp">inventory</span>
-                    <h3>${itemName}</h3>
-                    <h2>${quantity}</h2>
-                    <div class="progress">
-                        <svg><circle cx="38" cy="38" r="36"></circle></svg>
-                        <div class="number"><p>${status}%</p></div>
-                    </div>
-                    <small class="text-muted">Last checked: ${lastChecked}</small>
-                `;
-                container.appendChild(div);
-            });
+  const div = document.createElement('div');
+  div.classList.add(cardClass);
+  div.innerHTML = `
+    <span class="material-icons-sharp">inventory</span>
+    <h3>${itemName}</h3>
+    <h2>${quantity}</h2>
+    <div class="progress">
+      <svg><circle cx="38" cy="38" r="36"></circle></svg>
+      <div class="number"><p>${status}%</p></div>
+    </div>
+    <small class="text-muted">Exp: ${expiration} | Checked: ${lastChecked}</small>
+  `;
+  container.appendChild(div);
+});
+
         })
         .catch(error => console.error('Error fetching Google Sheet data:', error));
 
