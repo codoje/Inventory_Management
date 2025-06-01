@@ -1,16 +1,15 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // =================== ORIGINAL FUNCTIONALITY ===================
     const sideMenu = document.querySelector("aside");
     const profileBtn = document.querySelector("#profile-btn");
     const themeToggler = document.querySelector(".theme-toggler");
     const nextDay = document.getElementById('nextDay');
     const prevDay = document.getElementById('prevDay');
 
-    // Profile button toggle for side menu
     profileBtn.onclick = function() {
         sideMenu.classList.toggle('active');
     }
 
-    // Scroll event to remove side menu and add/remove header active class
     window.onscroll = () => {
         sideMenu.classList.remove('active');
         if(window.scrollY > 0) {
@@ -20,7 +19,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Theme toggle function
     const applySavedTheme = () => {
         const isDarkMode = localStorage.getItem('dark-theme') === 'true';
         if (isDarkMode) {
@@ -33,30 +31,55 @@ document.addEventListener('DOMContentLoaded', () => {
             themeToggler.querySelector('span:nth-child(2)').classList.add('active');
         }
     }
-
-    // Set the initial theme based on localStorage
     applySavedTheme();
 
-    // Toggle theme function
     themeToggler.onclick = function() {
-        // Toggle dark theme class on body
         document.body.classList.toggle('dark-theme');
-        
-        // Toggle active class on the theme toggler spans
         themeToggler.querySelector('span:nth-child(1)').classList.toggle('active');
         themeToggler.querySelector('span:nth-child(2)').classList.toggle('active');
-        
-        // Save the theme preference in localStorage
         localStorage.setItem('dark-theme', document.body.classList.contains('dark-theme'));
     }
 
-    // Function to set timetable data
+    // =================== GOOGLE SHEETS FETCH ===================
+    const apiKey = 'AIzaSyBxY3mesvB0hWrW-Qy4CoKNzUg-85XCg-M'; // Replace with your real key
+    const sheetId = '1XNQFX5_e8mMF7Ara5gV51uLIJFhAH9-DuTtPMyZV91w';
+    const range = 'Sheet1!A2:E'; // Update as needed
+
+    fetch(`https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}?key=${apiKey}`)
+        .then(response => response.json())
+        .then(data => {
+            const values = data.values;
+            console.log(values);
+
+            const container = document.querySelector('.subjects');
+            container.innerHTML = ''; // Clear old content
+
+            values.forEach(row => {
+                const [itemName, quantity, expiration, status, lastChecked] = row;
+
+                const div = document.createElement('div');
+                div.classList.add('eg'); // Change class as needed
+                div.innerHTML = `
+                    <span class="material-icons-sharp">inventory</span>
+                    <h3>${itemName}</h3>
+                    <h2>${quantity}</h2>
+                    <div class="progress">
+                        <svg><circle cx="38" cy="38" r="36"></circle></svg>
+                        <div class="number"><p>${status}%</p></div>
+                    </div>
+                    <small class="text-muted">Last checked: ${lastChecked}</small>
+                `;
+                container.appendChild(div);
+            });
+        })
+        .catch(error => console.error('Error fetching Google Sheet data:', error));
+
+    // =================== YOUR TIMETABLE STUFF ===================
     let setData = (day) => {
-        document.querySelector('table tbody').innerHTML = '';  // Clear previous table data
+        document.querySelector('table tbody').innerHTML = '';
         let daylist = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
         document.querySelector('.timetable div h2').innerHTML = daylist[day];
-        
-        // Define subjects for each day (you might need to update this with real data)
+
         let daySchedule = [];
         switch(day) {
             case 0: daySchedule = Sunday; break;
@@ -68,7 +91,6 @@ document.addEventListener('DOMContentLoaded', () => {
             case 6: daySchedule = Saturday; break;
         }
 
-        // Append timetable data to table
         daySchedule.forEach(sub => {
             const tr = document.createElement('tr');
             const trContent = `
@@ -82,30 +104,26 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Get current day and set timetable on page load
     let now = new Date();
-    let today = now.getDay();  // Get current day (0 - 6)
-    let day = today;  // To prevent today value from changing
+    let today = now.getDay();
+    let day = today;
 
-    // Function to toggle timetable visibility
     function timeTableAll(){
         document.getElementById('timetable').classList.toggle('active');
         setData(today);
         document.querySelector('.timetable div h2').innerHTML = "Today's Timetable";
     }
 
-    // Event listeners for next and previous day buttons
     nextDay.onclick = function() {
-        day <= 5 ? day++ : day = 0;  // If-else one-liner
+        day <= 5 ? day++ : day = 0;
         setData(day);
     }
 
     prevDay.onclick = function() {
-        day >= 1 ? day-- : day = 6;  // Move to previous day
+        day >= 1 ? day-- : day = 6;
         setData(day);
     }
 
-    // Set data on page load
-    setData(day);  
-    document.querySelector('.timetable div h2').innerHTML = "Today's Timetable";  // Set heading on load
+    setData(day);
+    document.querySelector('.timetable div h2').innerHTML = "Today's Timetable";
 });
