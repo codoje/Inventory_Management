@@ -20,6 +20,19 @@
     --box-shadow: 0 2rem 3rem var(--color-light)    
 }
 
+.eg.green {
+  background-color: #41f1b6; /* Light green */
+}
+
+.eg.yellow {
+  background-color: #ffbb55; /* Light yellow */
+}
+
+.eg.red {
+  background-color: #ff7782; /* Light red */
+}
+
+
 .dark-theme{
     --color-background: #181a1e;
     --color-white: #202528;
