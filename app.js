@@ -5,6 +5,18 @@ document.addEventListener('DOMContentLoaded', () => {
   const themeToggler = document.querySelector(".theme-toggler");
   const nextDay = document.getElementById('nextDay');
   const prevDay = document.getElementById('prevDay');
+  const loggedInUser = localStorage.getItem('username');
+if (!loggedInUser) {
+  // If no one is logged in, go back to login
+  window.location.href = 'index.html';
+}
+// Update the displayed company name
+const companyInfo = document.querySelector('.profile .info p');
+if (companyInfo) {
+  companyInfo.innerHTML = `<b>Company:</b> ${loggedInUser}`;
+}
+
+
 
   profileBtn.onclick = function() {
     sideMenu.classList.toggle('active');
@@ -81,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
       console.log("Processed ambulance data:", ambulanceData);
 
       // Filter for a single company (Macungie_Amb for example)
-      const companyName = "MacungieAmb";
+      const companyName = loggedInUser;
       const companyAmbulances = ambulanceData[companyName] || {};
 
       container.innerHTML = ''; // Clear static cards!
