@@ -16,8 +16,6 @@ if (companyInfo) {
   companyInfo.innerHTML = `<b>Company:</b> ${loggedInUser}`;
 }
 
-
-
   profileBtn.onclick = function() {
     sideMenu.classList.toggle('active');
   }
