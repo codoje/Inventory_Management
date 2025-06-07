@@ -5,83 +5,126 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Login - ShelfLife Patrol</title>
 <link rel="stylesheet" href="style.css">
-<style>
-  body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--color-background);
-    color: var(--color-dark);
-    min-height: 100vh;
-  }
-  .login-container {
-    background: var(--color-white);
-    border-radius: var(--border-radius-2);
-    box-shadow: var(--box-shadow);
-    padding: 2rem;
-    width: 100%;
-    max-width: 400px;
-    text-align: center;
-  }
-  .login-container h2 {
-    margin-bottom: 1rem;
-  }
-  .login-container form {
-    display: flex;
-    flex-direction: column;
-  }
-  .login-container input {
-    padding: 0.75rem;
-    margin: 0.5rem 0;
-    border: 1px solid var(--color-light);
-    border-radius: var(--border-radius-1);
-    background: var(--color-light);
-  }
-  .login-container button {
-    padding: 0.75rem;
-    background: var(--color-primary);
-    color: var(--color-white);
-    border: none;
-    border-radius: var(--border-radius-1);
-    cursor: pointer;
-    margin-top: 1rem;
-  }
-  .login-container button:hover {
-    background: var(--color-primary-variant);
-  }
-  .theme-toggler {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    cursor: pointer;
-  }
-  .theme-toggler span {
-    font-size: 1.5rem;
-    margin: 0 0.25rem;
-  }
-  .theme-toggler span.active {
-    color: var(--color-primary);
-  }
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+<style>body {
+  font-family: 'Poppins', sans-serif;
+  background: var(--color-background);
+  color: var(--color-dark);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  margin: 0;
+  position: relative; /* For absolutely-positioned elements like dark mode toggle */
+}
+
+.theme-toggler {
+  position: fixed; /* fixed to viewport */
+  top: 1rem;
+  right: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.login-container {
+  background: var(--color-white);
+  color: var(--color-dark);
+  padding: 2rem;
+  border-radius: var(--card-border-radius);
+  box-shadow: var(--box-shadow);
+  width: 100%;
+  max-width: 400px;
+  margin: 2rem auto;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.login-container input {
+  width: 100%; /* ensures they span the box width */
+  box-sizing: border-box;
+  padding: 0.75rem;
+  margin: 0.5rem 0;
+  border: none;
+  border-radius: var(--border-radius-1);
+  background: var(--color-light);
+  color: var(--color-dark);
+  outline: none;
+}
+
+.login-container input::placeholder {
+  color: #999;
+}
+
+.login-container button {
+  width: 100%;
+  padding: 0.75rem;
+  background: var(--color-primary);
+  color: #fff;
+  border: none;
+  border-radius: var(--border-radius-1);
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background 0.3s;
+}
+
+.login-container button:hover {
+  background: var(--color-primary-variant);
+}
+
+.login-container p#error-message {
+  color: var(--color-danger);
+  margin-top: 0.5rem;
+  display: none;
+}
+
+body.dark-theme .login-container {
+  background: #202528;
+  color: #edeffd;
+}
+
+body.dark-theme .login-container input {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.big-header {
+  margin-bottom: 1rem;
+  font-size: 8rem;
+  text-align: center;
+  font-weight: 700;
+}
+.logo img {
+  display: block;
+  margin: 0 auto 1rem; /* Center horizontally */
+}
+
 </style>
 </head>
+
 <body>
+  <h1 class="big-header">Shelf<span class="danger">Life</span>Patrol</h1>
   <div class="theme-toggler">
     <span class="material-icons-sharp active">light_mode</span>
     <span class="material-icons-sharp">dark_mode</span>
   </div>
 
   <div class="login-container">
-    <h2>Login to ShelfLife Patrol</h2>
+    <div class="logo" title="ShelfLife Patrol" style="text-align: center;">
+      <img src="images/logo.png" alt="ShelfLife Patrol Logo" style="width: 150px; margin-bottom: 1rem;">
+    </div>
+
     <form id="loginForm">
       <input type="text" id="username" placeholder="Username" required>
       <input type="password" id="password" placeholder="Password" required>
       <button type="submit">Login</button>
     </form>
-    <p id="error-message" style="color: red; display: none;">Invalid username or password.</p>
+    <p id="error-message">Invalid username or password.</p>
   </div>
 
   <script>
-    // Hardcoded login
     const users = { "MacungieAmb": "macpass", "CetroniaAmb": "cetpass", "ToptonAmb": "toptonpass" };
     document.getElementById('loginForm').addEventListener('submit', function(event) {
       event.preventDefault();
@@ -120,8 +163,5 @@
       localStorage.setItem('dark-theme', document.body.classList.contains('dark-theme'));
     }
   </script>
-
-  <!-- Include Material Icons for the light/dark icons -->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
 </body>
 </html>
