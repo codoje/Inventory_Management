@@ -55,6 +55,57 @@ html{
     font-size: 14px;
     scroll-behavior: smooth;
 }
+/* Style the select dropdown */
+select {
+  padding: 0.5rem;
+  border: none;
+  border-radius: var(--border-radius-1);
+  background: var(--color-primary);
+  color: var(--color-white);
+  font-size: 1rem;
+  margin-right: 0.5rem;
+  cursor: pointer;
+}
+
+/* Dark mode adjustments for select */
+body.dark-theme select {
+  background: var(--color-dark-bg);
+  color: var(--color-white);
+  border: 1px solid var(--color-primary-variant); /* subtle border if needed */
+}
+
+/* Style the Load History button */
+button {
+  padding: 0.5rem 1rem;
+  background: var(--color-primary);
+  color: var(--color-white);
+  border: none;
+  border-radius: var(--border-radius-1);
+  cursor: pointer;
+  transition: background 0.3s;
+  font-size: 1rem;
+}
+
+/* Dark mode adjustments for button */
+/* Style for the select dropdown in dark mode */
+body.dark-theme select {
+  background: #333; /* Dark gray for visibility */
+  color: #fff; /* White text */
+  border: 1px solid #555; /* subtle border for visibility */
+}
+
+/* Style for buttons in dark mode */
+body.dark-theme button {
+  background: #444; /* slightly lighter dark bg for buttons */
+  color: #fff;
+  border: 1px solid #666; /* subtle border for contrast */
+}
+
+body.dark-theme button:hover {
+  background: #555; /* highlight on hover */
+}
+
+
 body{
     font-family: 'Poppins', sans-serif;
     font-size: .88rem;

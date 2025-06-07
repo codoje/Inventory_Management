@@ -57,10 +57,12 @@ document.addEventListener('DOMContentLoaded', () => {
           <canvas id="${canvasId}" width="100" height="100"></canvas>
           <small class="text-muted">Green: ${greenPerc}% | Yellow: ${yellowPerc}% | Red: ${redPerc}%</small>
         `;
-        div.addEventListener('click', () => {
-        localStorage.setItem('selectedCabinet', cabinet);
-        window.location.href = 'cabinet.html';
-        });
+div.addEventListener('click', (event) => {
+  event.preventDefault();
+  localStorage.setItem('selectedCabinet', cabinet);
+  window.location.href = 'cabinet.html';
+});
+
 
         container.appendChild(div);
 

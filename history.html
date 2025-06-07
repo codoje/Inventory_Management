@@ -4,12 +4,12 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ShelfLife Patrol</title>
+  <title>ShelfLife Patrol - History</title>
   <link rel="shortcut icon" href="./images/logo.png">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 
-  <!-- Include Chart.js for dynamic compliance circles -->
+  <!-- Chart.js for dynamic compliance circles -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -20,7 +20,7 @@
             <h2>Shelf<span class="danger">Life</span>Patrol</h2>
         </div>
         <div class="navbar">
-            <a href="dashboard.html" class="active">
+            <a href="dashboard.html">
                 <span class="material-icons-sharp">home</span>
                 <h3>Home</h3>
             </a>
@@ -28,7 +28,7 @@
                 <span class="material-icons-sharp">today</span>
                 <h3>Expiring Soon</h3>
             </a> 
-            <a href="history.html">
+            <a href="history.html" class="active">
                 <span class="material-icons-sharp">grid_view</span>
                 <h3>History</h3>
             </a>
@@ -73,13 +73,25 @@
         </aside>
 
         <main>
-            <h1>Items</h1>
+            <h1>Cabinets</h1>
+            <div style="padding: 1rem;">
+                <select id="historyDateSelect">
+                <option value="">Select a Date</option>
+                </select>
+                <button onclick="loadHistory()">Load History</button>
+            </div>
+
             <div class="subjects">
 
             </div>
+
+
         </main>
 
+    </div>
+
+    <script src="timeTable.js"></script>
     <script src="app.js"></script>
-    <script src="cabinet.js"></script>
+    <script src="history.js"></script>
 </body>
 </html>

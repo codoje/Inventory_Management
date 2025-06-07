@@ -1,8 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const container = document.querySelector('.subjects');
+const container = document.querySelector('.subjects');
 const apiKey = 'AIzaSyBxY3mesvB0hWrW-Qy4CoKNzUg-85XCg-M';
 const sheetId = '1XNQFX5_e8mMF7Ara5gV51uLIJFhAH9-DuTtPMyZV91w';
-  const range = 'Sheet1!A2:E';
+const range = 'Sheet1!A2:E';
 
   const company = localStorage.getItem('selectedCompany');
   const ambulance = localStorage.getItem('selectedAmbulance');

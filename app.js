@@ -10,6 +10,7 @@ if (!loggedInUser) {
   // If no one is logged in, go back to login
   window.location.href = 'index.html';
 }
+
 // Update the displayed company name
 const companyInfo = document.querySelector('.profile .info p');
 if (companyInfo) {
@@ -110,14 +111,16 @@ div.innerHTML = `
   <canvas id="${canvasId}" width="100" height="100"></canvas>
   <small class="text-muted">Green: ${greenPerc}% | Yellow: ${yellowPerc}% | Red: ${redPerc}%</small>
 `;
-div.addEventListener('click', () => {
+div.addEventListener('click', (event) => {
+  event.preventDefault();
+  console.log("Clicked on:", ambulance); // or cabinet
   localStorage.setItem('selectedAmbulance', ambulance);
   localStorage.setItem('selectedCompany', companyName);
   window.location.href = 'ambulance.html';
 });
-container.appendChild(div);
 
-        container.appendChild(div);
+
+container.appendChild(div);
 
         const ctx = document.getElementById(canvasId).getContext('2d');
         new Chart(ctx, {
@@ -138,57 +141,4 @@ container.appendChild(div);
       }
     })
     .catch(error => console.error('Error fetching Google Sheet data:', error));
-
-  // =================== TIMETABLE FUNCTIONALITY (unchanged) ===================
-  let setData = (day) => {
-    document.querySelector('table tbody').innerHTML = '';
-    let daylist = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-    document.querySelector('.timetable div h2').innerHTML = daylist[day];
-
-    let daySchedule = [];
-    switch(day) {
-      case 0: daySchedule = Sunday; break;
-      case 1: daySchedule = Monday; break;
-      case 2: daySchedule = Tuesday; break;
-      case 3: daySchedule = Wednesday; break;
-      case 4: daySchedule = Thursday; break;
-      case 5: daySchedule = Friday; break;
-      case 6: daySchedule = Saturday; break;
-    }
-
-    daySchedule.forEach(sub => {
-      const tr = document.createElement('tr');
-      const trContent = `
-        <td>${sub.time}</td>
-        <td>${sub.roomNumber}</td>
-        <td>${sub.subject}</td>
-        <td>${sub.type}</td>
-      `;
-      tr.innerHTML = trContent;
-      document.querySelector('table tbody').appendChild(tr);
-    });
-  }
-
-  let now = new Date();
-  let today = now.getDay();
-  let day = today;
-
-  function timeTableAll(){
-    document.getElementById('timetable').classList.toggle('active');
-    setData(today);
-    document.querySelector('.timetable div h2').innerHTML = "Today's Timetable";
-  }
-
-  nextDay.onclick = function() {
-    day <= 5 ? day++ : day = 0;
-    setData(day);
-  }
-
-  prevDay.onclick = function() {
-    day >= 1 ? day-- : day = 6;
-    setData(day);
-  }
-
-  setData(day);
-  document.querySelector('.timetable div h2').innerHTML = "Today's Timetable";
 });
